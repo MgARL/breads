@@ -17,6 +17,12 @@ app.get('/',(req,res) => {
 const breadsController = require('./controllers/breads_controller')
 app.use('/breads', breadsController)
 
+//PAGE NOT FOUND 404
+
+app.get('*', (req,res) => {
+    res.status(404).send('<h1>Page Not Found Status Code 404</h1><br><a href="http://localhost:3003/">Home</a>')
+})
+
 //LISTEN
 
 app.listen(PORT, () =>{
