@@ -13,12 +13,13 @@ breads.get('/', (req, res) => {
 
 // SHOW
 breads.get('/:arrayIndex', (req, res) => {
-    const  bread = Bread[req.params.arrayIndex]
-    if(bread){
-        res.send(Bread[req.params.arrayIndex])
-    } else {
-        res.send('That Bread does not Exists');
-    }
+        const  bread = Bread[req.params.arrayIndex]
+        if(bread){
+            res.render('show', {
+                bread: Bread[req.params.arrayIndex]})
+        } else {
+            res.status(404).send('That Bread does not Exists');
+        }
   })
 
 module.exports = breads

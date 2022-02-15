@@ -10,6 +10,7 @@ const PORT = process.env.PORT
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
+app.use(express.static('public'))
 
 
 //ROUTES
@@ -25,7 +26,7 @@ app.use('/breads', breadsController)
 //PAGE NOT FOUND 404
 
 app.get('*', (req,res) => {
-    res.status(404).send('<h1>Page Not Found Status Code 404</h1><br><a href="http://localhost:3003/">Home</a>')
+    res.status(404).send('<h1>Page Not Found Status Code 404</h1><br><a href="http://localhost:3003/breads">Home</a>')
 })
 
 //LISTEN
