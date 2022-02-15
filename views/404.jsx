@@ -6,7 +6,7 @@ function pageNotFound () {
     return (
       <Default>
          <h2>404 Page Not Found</h2>
-         <button><a href="http://localhost:3003/breads">Go Back Home</a></button>
+         <button><a href="/breads">Go Back Home</a></button>
       </Default>
     )
 }
