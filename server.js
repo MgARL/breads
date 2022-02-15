@@ -16,7 +16,7 @@ app.use(express.static('public'))
 //ROUTES
 
 app.get('/',(req,res) => {
-    res.send('Welcome to and Awesome App about Breads')
+    res.redirect('/breads')
 })
 
 //Breads 

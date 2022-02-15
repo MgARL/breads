@@ -5,8 +5,8 @@ function pageNotFound () {
 //   console.log(bread.name)
     return (
       <Default>
-         <h2>404 Page not Found</h2>
-         <button><a href="http://localhost:3003/breads">Go back Home</a></button>
+         <h2>404 Page Not Found</h2>
+         <button><a href="http://localhost:3003/breads">Go Back Home</a></button>
       </Default>
     )
 }
