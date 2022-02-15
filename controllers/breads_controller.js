@@ -17,9 +17,9 @@ breads.get('/:arrayIndex', (req, res) => {
         if(bread){
             res.render('show', {
                 bread: Bread[req.params.arrayIndex]})
-        } else {
-            res.status(404).send('That Bread does not Exists');
+         } else {
+            res.status(404).render('404');
         }
-  })
+})
 
 module.exports = breads
