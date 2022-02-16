@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const methodOverride = require('method-override')
 
 //config
 
@@ -11,6 +12,8 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
 app.use(express.static('public'))
+app.use(methodOverride('_method'))
+
 
 
 //ROUTES
