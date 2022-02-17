@@ -22,4 +22,9 @@ body {
     background-color: rgba(255, 0, 0, 0.8);
     color: white;
   }
+  #edit-btn{
+    margin-top: 2em;
+    background-color: rgba(255, 168, 6, 0.911);
+    color: white;
+  }
   
