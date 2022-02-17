@@ -1,6 +1,10 @@
 body {
     background-color: floralwhite;
   }
+  .wrapper{
+    margin: 2rem;
+    text-align: center;
+  }
   
   img {
     width: 50%;
