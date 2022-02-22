@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const methodOverride = require('method-override')
+const mongoose = require('mongoose')
 
 //config
 
@@ -32,6 +33,11 @@ app.use('/breads', breadsController)
 app.get('*', (req,res) => {
     res.status(404).render('404')
 })
+
+// Database
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(()=> console.log('db connected'))
+    .catch(err => console.error(err))
 
 //LISTEN
 
