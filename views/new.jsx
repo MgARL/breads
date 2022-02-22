@@ -12,7 +12,6 @@ function New () {
             type="text"
             name="name"
             id="name"
-            pattern="[A-Za-z]{3}"
             required
           />
           <label htmlFor="image">Image</label>
