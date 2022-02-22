@@ -53,8 +53,10 @@ breads.get('/:id', (req, res) => {
 })
 // DELETE
 breads.delete('/:id', (req, res) => {
-  Bread.splice(req.params.id, 1)
-  res.status(303).redirect('/breads')
+  Bread.deleteOne({ id: req.params.id})
+    .then(
+      res.status(303).redirect('/breads')
+    ).catch(err => console.error(err))
 })
 
 // UPDATE
@@ -64,8 +66,13 @@ breads.put('/:id', (req, res) => {
   } else {
     req.body.hasGluten = false
   }
-  Bread[req.params.id] = req.body
-  res.redirect(`/breads/${req.params.id}`)
+  Bread.updateOne({id: req.params.id}, {
+    name: req.body.name,
+    hasGluten: req.body.hasGluten,
+    image: req.body.image
+  }).then(
+    res.redirect(`/breads/${req.params.id}`)
+  )
 })
 
 module.exports = breads
