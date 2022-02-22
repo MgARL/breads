@@ -4,12 +4,33 @@ const Bread = require('../models/bread')
 
 // INDEX
 breads.get('/', (req, res) => {
-    res.render('index', {
-        "breads": Bread,
-        "title": 'Index Page'
+  Bread.find()
+    .then( foundBreads => {
+      res.render('index', {
+          "breads": foundBreads,
+          "title": 'Index Page'
+      })
     })
-//   res.send(Bread)
 })
+
+breads.post('/', (req, res) => {
+  if(!req.body.image) {
+      req.body.image = undefined 
+  }
+  if(req.body.hasGluten === 'on') {
+    req.body.hasGluten = true
+  } else {
+    req.body.hasGluten = false
+  }
+  Bread.create(req.body)
+  res.redirect('/breads')
+})
+
+// breads.get
+breads.get('/new', (req,res) => {
+  res.render('new')
+})
+
 
   // EDIT
   breads.get('/:indexArray/edit', (req, res) => {
