@@ -13,6 +13,20 @@ breads.get('/', (req, res) => {
       })
     })
 })
+// Joey Breads
+breads.get('/baker/:baker', async (req, res) =>{
+  try {
+    const breadsArr = await Bread.findByBaker(req.params.baker)
+    console.log(req.params.baker)
+    res.render('bakerBreads', {
+      breads : breadsArr,
+      baker : req.params.baker
+    })
+  } catch (error) {
+    const { message } = error
+    res.render('404', { message: message } )
+  }
+})
 // Create
 breads.post('/', async (req, res) => {
   if (!req.body.image) {
@@ -28,7 +42,6 @@ breads.post('/', async (req, res) => {
     
   } catch (error) {
     const { message } = error
-    console.log(message)
     res.render('404', { message: message })
   }
 })
@@ -52,6 +65,8 @@ breads.get('/:id/edit', (req, res) => {
 breads.get('/:id', (req, res) => {
   Bread.findById(req.params.id)
   .then( foundBread => {
+    // const bakedBy = foundBread.getBakedBy()
+    // console.log(bakedBy)
     res.render('show', {
       bread: foundBread
     })
