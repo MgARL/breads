@@ -1,6 +1,7 @@
 const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread')
+const seedArray = require('../models/seedArray')
 
 // INDEX
 breads.get('/', (req, res) => {
@@ -49,14 +50,15 @@ breads.get('/:id', (req, res) => {
       bread: foundBread
     })
   })
-  .catch(err => res.send('404'))
+  .catch(err => res.render('404'))
 })
 // DELETE
 breads.delete('/:id', (req, res) => {
-  Bread.deleteOne({ id: req.params.id})
+  Bread.findByIdAndDelete(req.params.id)
     .then(
       res.status(303).redirect('/breads')
-    ).catch(err => console.error(err))
+    )
+    .catch(err => res.render('404'))
 })
 
 // UPDATE
@@ -66,13 +68,21 @@ breads.put('/:id', (req, res) => {
   } else {
     req.body.hasGluten = false
   }
-  Bread.updateOne({id: req.params.id}, {
-    name: req.body.name,
-    hasGluten: req.body.hasGluten,
-    image: req.body.image
-  }).then(
+  Bread.findByIdAndUpdate(req.params.id,  req.body, { new: true })
+  .then( updatedBread => {
+    console.log(updatedBread)
     res.redirect(`/breads/${req.params.id}`)
-  )
+  })
+  .catch(err => res.render('404'))
+})
+
+// SEED ROUTE
+
+breads.get('/data/seed', (req, res) =>{
+  Bread.insertMany(seedArray)
+    .then(createdBreads => {
+      res.redirect('/breads')
+    })
 })
 
 module.exports = breads
