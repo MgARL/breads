@@ -15,6 +15,7 @@ function Show ({bread}) {
               have gluten.
           </p>
         <img src={bread.image} alt={bread.name} id={bread.name}/>
+        <p>Baked by {bread.baker}</p>
         <a href={`/breads/${bread.id}/edit`}><button id="edit-btn">Edit</button></a>
         
         <form action={`/breads/${bread.id}?_method=DELETE`} method="POST">

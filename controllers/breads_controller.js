@@ -14,7 +14,7 @@ breads.get('/', (req, res) => {
     })
 })
 // Create
-breads.post('/', (req, res) => {
+breads.post('/', async (req, res) => {
   if (!req.body.image) {
     req.body.image = undefined
   }
@@ -22,9 +22,15 @@ breads.post('/', (req, res) => {
     req.body.hasGluten = true
   } else {
     req.body.hasGluten = false
+  } try {
+    const createdBread = await Bread.create(req.body)
+    res.redirect('/breads')
+    
+  } catch (error) {
+    const { message } = error
+    console.log(message)
+    res.render('404', { message: message })
   }
-  Bread.create(req.body)
-  res.redirect('/breads')
 })
 
 // New
