@@ -14,8 +14,8 @@ const breadSchema = new Schema({
     default: 'http://place-hold.it/500x500.png'
   },
   baker: {
-    type: String,
-    enum: ['Rachel', 'Monica', 'Joey', 'Chandler', 'Ross', 'Phoebe']
+    type: Schema.Types.ObjectId,
+    ref: 'Baker'
   }
 })
 
