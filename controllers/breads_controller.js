@@ -2,6 +2,7 @@ const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread')
 const seedArray = require('../models/seedArray')
+const Baker = require('../models/baker')
 
 // INDEX
 breads.get('/', (req, res) => {
@@ -47,8 +48,16 @@ breads.post('/', async (req, res) => {
 })
 
 // New
-breads.get('/new', (req, res) => {
-  res.render('new')
+breads.get('/new', async (req, res) => {
+  try {
+    let foundBakers = await Baker.find()
+    res.render('new', {
+      bakers: foundBakers
+    })
+    
+  } catch (error) {
+    console.error(error)
+  }
 })
 
 
