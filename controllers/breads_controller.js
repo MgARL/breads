@@ -5,7 +5,17 @@ const seedArray = require('../models/seedArray')
 const Baker = require('../models/baker')
 
 // INDEX
-breads.get('/', (req, res) => {
+breads.get('/', async (req, res) => {
+  try {
+    const foundBreads = await Bread.find().populate('baker')
+    console.log(foundBreads)
+    res.render('index', {
+      "breads": foundBreads,
+      "title": 'Index Page'
+    })
+  } catch (error) {
+    console.error(error)
+  }
   Bread.find()
     .then(foundBreads => {
       res.render('index', {
@@ -60,17 +70,22 @@ breads.get('/new', async (req, res) => {
 
 
 // EDIT
-breads.get('/:id/edit', (req, res) => {
-  Bread.findById(req.params.id)
-  .then( foundBread => {
+breads.get('/:id/edit', async (req, res) => {
+  try {
+    const foundBread = await Bread.findById(req.params.id)
+    const  foundBakers = await Baker.find()
     res.render('edit', {
-      bread: foundBread
+      bread: foundBread,
+      bakers: foundBakers
     })
-  })
+  } catch (error) {
+    console.error(error)
+  }
 })
 // SHOW
 breads.get('/:id', (req, res) => {
   Bread.findById(req.params.id)
+  .populate('baker')
   .then( foundBread => {
     res.render('show', {
       bread: foundBread
@@ -96,7 +111,6 @@ breads.put('/:id', (req, res) => {
   }
   Bread.findByIdAndUpdate(req.params.id,  req.body, { new: true })
   .then( updatedBread => {
-    console.log(updatedBread)
     res.redirect(`/breads/${req.params.id}`)
   })
   .catch(err => res.render('404'))
