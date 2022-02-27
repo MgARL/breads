@@ -50,10 +50,8 @@ breads.post('/', async (req, res) => {
 // New
 breads.get('/new', async (req, res) => {
   try {
-    let foundBakers = await Baker.find()
-    res.render('new', {
-      bakers: foundBakers
-    })
+    const foundBakers = await Baker.find()
+    res.render('new', { bakers: foundBakers })
     
   } catch (error) {
     console.error(error)
@@ -74,8 +72,6 @@ breads.get('/:id/edit', (req, res) => {
 breads.get('/:id', (req, res) => {
   Bread.findById(req.params.id)
   .then( foundBread => {
-    // const bakedBy = foundBread.getBakedBy()
-    // console.log(bakedBy)
     res.render('show', {
       bread: foundBread
     })
