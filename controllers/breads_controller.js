@@ -8,21 +8,15 @@ const Baker = require('../models/baker')
 breads.get('/', async (req, res) => {
   try {
     const foundBreads = await Bread.find().populate('baker')
-    console.log(foundBreads)
+    const foundBakers = await Baker.find()
     res.render('index', {
-      "breads": foundBreads,
-      "title": 'Index Page'
+      breads: foundBreads,
+      bakers: foundBakers, 
+      title: 'Index Page'
     })
   } catch (error) {
     console.error(error)
   }
-  Bread.find()
-    .then(foundBreads => {
-      res.render('index', {
-        "breads": foundBreads,
-        "title": 'Index Page'
-      })
-    })
 })
 // Joey Breads
 breads.get('/baker/:baker', async (req, res) =>{
