@@ -34,4 +34,14 @@ baker.get('/:id', async (req, res) =>{
     })
 })
 
+// delete
+baker.delete('/:id', async (req, res) => {
+    try {
+        const deletedBaker = await Baker.findByIdAndDelete(req.params.id)
+        res.status(303).redirect('/breads')
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 module.exports = baker

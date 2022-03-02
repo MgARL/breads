@@ -26,6 +26,10 @@ bakerSchema.virtual('breads', {
     localField: '_id',
     foreignField: 'baker'
 })
+bakerSchema.post('findOneAndDelete', async function(){
+    let deleteStatus = await Bread.deleteMany({ baker: this._conditions._id })
+    console.log(deleteStatus)
+})
 
 // model and export
 
