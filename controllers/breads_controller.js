@@ -77,15 +77,14 @@ breads.get('/:id/edit', async (req, res) => {
   }
 })
 // SHOW
-breads.get('/:id', (req, res) => {
-  Bread.findById(req.params.id)
-  .populate('baker')
-  .then( foundBread => {
-    res.render('show', {
-      bread: foundBread
-    })
-  })
-  .catch(err => res.render('404'))
+breads.get('/:id', async (req, res) => {
+try {
+  let foundBread = await Bread.findById(req.params.id).populate('baker')
+  res.render('show', { bread: foundBread })
+} catch (error) {
+  res.render('404')
+}
+
 })
 // DELETE
 breads.delete('/:id', (req, res) => {
@@ -97,26 +96,30 @@ breads.delete('/:id', (req, res) => {
 })
 
 // UPDATE
-breads.put('/:id', (req, res) => {
+breads.put('/:id', async (req, res) => {
   if (req.body.hasGluten === 'on') {
     req.body.hasGluten = true
   } else {
     req.body.hasGluten = false
   }
-  Bread.findByIdAndUpdate(req.params.id,  req.body, { new: true })
-  .then( updatedBread => {
+
+  try {
+    let updatedBread = await Bread.findByIdAndUpdate(req.params.id,  req.body, { new: true })
     res.redirect(`/breads/${req.params.id}`)
-  })
-  .catch(err => res.render('404'))
+  } catch (error) {
+   res.render('404')
+  }
 })
 
 // SEED ROUTE
 
-breads.get('/data/seed', (req, res) =>{
-  Bread.insertMany(seedArray)
-    .then(createdBreads => {
-      res.redirect('/breads')
-    })
+breads.get('/data/seed', async (req, res) =>{
+  try {
+    let createdBreads = await Bread.insertMany(seedArray)
+    res.redirect('/breads')
+  } catch (error) {
+   console.log(error) 
+  }
 })
 
 module.exports = breads
