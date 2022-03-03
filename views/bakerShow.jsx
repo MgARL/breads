@@ -20,6 +20,8 @@ function Show ({baker}) {
           <form action={`/bakers/${baker.id}?_method=DELETE`} method="POST">
             <input type="submit" value="DELETE"/>
           </form>
+
+          <button><a href="/breads">Go Back Home</a></button>
       </Default>
     )
 }
