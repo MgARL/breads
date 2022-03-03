@@ -7,8 +7,11 @@ const Baker = require('../models/baker')
 // INDEX
 breads.get('/', async (req, res) => {
   try {
-    const foundBreads = await Bread.find().populate('baker')
-    const foundBakers = await Baker.find()
+    const foundBreads = await Bread.find().populate({
+      path:'baker', 
+      options: {limit: 2}
+    }).limit(10).lean()
+    const foundBakers = await Baker.find().lean()
     res.render('index', {
       breads: foundBreads,
       bakers: foundBakers, 
@@ -87,12 +90,14 @@ try {
 
 })
 // DELETE
-breads.delete('/:id', (req, res) => {
-  Bread.findByIdAndDelete(req.params.id)
-    .then(
-      res.status(303).redirect('/breads')
-    )
-    .catch(err => res.render('404'))
+breads.delete('/:id', async (req, res) => {
+try {
+  let deletedBread = await Bread.findByIdAndDelete(req.params.id)
+  res.status(303).redirect('/breads')
+
+} catch (error) {
+  res.render('404')
+}
 })
 
 // UPDATE

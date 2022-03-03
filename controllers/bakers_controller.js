@@ -18,7 +18,10 @@ baker.get('/data/seed', async (req, res) => {
 //Index?
 baker.get('/', async (req, res) => {
     try {
-        const foundBakers = await Baker.find().populate('breads')
+        const foundBakers = await Baker.find().populate({
+            path:'breads',
+            options: { limit: 2}
+        })
         res.send(foundBakers)
     } catch (error) {
         res.render('404', {
@@ -28,7 +31,10 @@ baker.get('/', async (req, res) => {
 })
 // show
 baker.get('/:id', async (req, res) =>{
-    const foundBaker = await Baker.findById(req.params.id).populate('breads')
+    const foundBaker = await Baker.findById(req.params.id).populate({
+        path:'breads',
+        options: { limit: 5}
+    })
     res.render('bakerShow', {
         baker: foundBaker
     })
